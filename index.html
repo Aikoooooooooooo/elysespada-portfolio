@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== Bureau ===== */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #008080; /* couleur rétro Windows */
+            overflow: hidden;
+        }
+        #desktop {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* ===== Logo central ===== */
+        #home {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        #logo {
+            width: 200px;
+            transition: transform 0.1s;
+        }
+
+        /* ===== Dossiers ===== */
+        .folder {
+            position: absolute;
+            width: 80px;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+        }
+        .folder img {
+            width: 60px;
+            height: 60px;
+        }
+        .folder p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+        }
+        #about-folder { top: 50px; left: 50px; }
+        #portfolio-folder { top: 50px; left: 150px; }
+        #contact-folder { top: 50px; left: 250px; }
+
+        /* ===== Fenêtres ===== */
+        .window {
+            position: absolute;
+            top: 100px;
+            left: 150px;
+            width: 650px;
+            height: 400px;
+            background-color: #c0c0c0;
+            border: 2px solid #fff;
+            box-shadow: 2px 2px 0 #000;
+            display: none;
+            z-index: 4;
+        }
+        .window-titlebar {
+            cursor: grab;
+            background-color: #00008B;
+            color: #fff;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .window-content {
+            padding: 10px;
+            overflow-y: auto;
+            height: calc(100% - 35px);
+        }
+        .close-btn {
+            background: red;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+            border-radius: 3px;
+        }
+
+        /* GIF container */
+        .gif-container img {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+        }
+        .gif-container {
+            position: absolute;
+            top: 50px;
+            left: 20px;
+        }
+
+        /* Notes fenêtre */
+        .note-window { width: 400px; height: 300px; }
+    </style>
+</head>
+<body>
+    <!-- Logo central -->
+    <section id="home">
+        <img src="images/logo.png" alt="Mon Logo" id="logo">
+    </section>
+
+    <!-- Bureau Windows rétro -->
+    <div id="desktop">
+        <!-- Dossiers -->
+        <div class="folder" id="about-folder">
+            <img src="images/ton-icone.png" alt="À propos">
+            <p>À propos</p>
+        </div>
+        <div class="folder" id="portfolio-folder">
+            <img src="images/portfolio.png" alt="Portfolio">
+            <p>Portfolio</p>
+        </div>
+        <div class="folder" id="contact-folder">
+            <img src="images/contact.png" alt="Contact">
+            <p>Contact</p>
+        </div>
+
+       <!-- Fenêtre "À propos" -->
+<div class="window" id="about-window" style="width:600px; height:auto;">
+    <div class="window-titlebar">
+        <span>À propos</span>
+        <button class="close-btn">X</button>
+    </div>
+
+    <div class="window-content" style="display:flex; flex-direction:column; align-items:center; padding:20px; gap:20px;">
+        <!-- Carte ID -->
+        <div class="card-container">
+            <div class="card">
+                <!-- Recto -->
+                <div class="card-front">
+                    <img src="images/carte haut.png" alt="Recto carte" class="card-image">
+                    <img src="images/GIF.gif" alt="Animation" class="card-gif">
+                </div>
+                <!-- Verso -->
+                <div class="card-back">
+                    <img src="images/carte bas.png" alt="Verso carte" class="card-image">
+                </div>
+            </div>
+        </div>
+
+        <!-- Texte à propos -->
+        <div style="line-height:1.5; max-width:550px;">
+            <p><strong>Je m'appelle Elyse Spada</strong>, passionnée par l’image et la communication, toujours à la recherche de nouvelles idées et expériences créatives.</p>
+            <p>Après un bac HLP et Audiovisuel au lycée Bristol à Cannes, j’ai poursuivi des études en Lettres modernes à la Sorbonne, avant de me spécialiser en BTS Communication à l’ISIFA Plus Values en alternance.</p>
+            <p>Aujourd’hui, je mets mes compétences au service de projets variés, alliant réflexion stratégique et créativité visuelle. Photoshop, Illustrator et autres outils de création sont mes terrains d’expérimentation quotidiens.</p>
+            <p>J’ai également créé Bunny, un personnage qui symbolise mes obsessions créatives, d’où le logo au lapin percé.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Fenêtre "Portfolio" -->
+<div class="window" id="portfolio-window" style="width:900px; height:650px;">
+    <div class="window-titlebar">
+        <span>Portfolio</span>
+        <button class="close-btn">X</button>
+    </div>
+    <div class="window-content" style="overflow-y:auto; height:calc(100% - 35px); padding:10px; display:flex; flex-wrap:wrap; gap:40px;">
+        <!-- Visuel 1 -->
+        <div class="portfolio-item" style="flex:1 1 calc(50% - 20px); box-sizing:border-box;">
+            <img src="images/34myrphu la chouette - Copie.png" alt="Visuel 1" style="width:100%; display:block; margin-bottom:5px;">
+            <button class="note-btn" data-note="note1" style="cursor:pointer;">➡ Note d’intention</button>
+        </div>
+        <!-- Visuel 2 -->
+        <div class="portfolio-item" style="flex:1 1 calc(50% - 20px); box-sizing:border-box;">
+            <img src="images/Rounhaa - Copie.png" alt="Visuel 2" style="width:100%; display:block; margin-bottom:5px;">
+            <button class="note-btn" data-note="note2" style="cursor:pointer;">➡ Note d’intention</button>
+        </div>
+        <!-- Visuel 3 -->
+        <div class="portfolio-item" style="flex:1 1 calc(50% - 20px); box-sizing:border-box;">
+            <img src="images/Khali.png" alt="Visuel 3" style="width:100%; display:block; margin-bottom:5px;">
+            <button class="note-btn" data-note="note3" style="cursor:pointer;">➡ Note d’intention</button>
+        </div>
+        <!-- Visuel 4 -->
+        <div class="portfolio-item" style="flex:1 1 calc(50% - 20px); box-sizing:border-box;">
+            <img src="images/Yuu V3.png" alt="Visuel 4" style="width:100%; display:block; margin-bottom:5px;">
+            <button class="note-btn" data-note="note4" style="cursor:pointer;">➡ Note d’intention</button>
+        </div>
+        <!-- Visuel 5 -->
+        <div class="portfolio-item" style="flex:1 1 calc(50% - 20px); box-sizing:border-box;">
+            <img src="images/Izu.png" alt="Visuel 5" style="width:100%; display:block; margin-bottom:5px;">
+            <button class="note-btn" data-note="note5" style="cursor:pointer;">➡ Note d’intention</button>
+        </div>
+    </div>
+</div>
+
+<!-- Notes d’intention -->
+<div class="window note-window" id="note1-window">
+    <div class="window-titlebar">
+        <span>Note d’intention - 34Murphy La Chouette</span>
+        <button class="close-btn">X</button>
+    </div>
+    <div class="window-content">
+        <p>Ce visuel s’inscrit dans une esthétique sombre et percutante, pensée comme une affiche à fort impact visuel. L’élément central, la chouette blanche, fait référence à la cover de l’album LA CHOUETTE, mais j’y ai ajouté ma touche personnelle : un regard rouge, inquiétant, qui introduit une dimension sombre et légèrement horrifique. La cible placée sur son front vient renforcer la tension et rompre le mouvement naturel des ailes. Le choix du contraste marqué entre le blanc éclatant de l’animal et les touches de rouge vif attire immédiatement l’œil et installe une atmosphère dérangeante.</p>
+        <p>- - -</p>
+        <p>Pour le titre « 34Murphy », j’ai opté pour une typographie élégante et fluide afin de contrebalancer la dureté des éléments graphiques, créant ainsi un équilibre subtil entre brutalité et raffinement. L’inscription « La Chouette » en arrière-plan rappelle l’album et ancre le visuel dans son univers d’inspiration.</p>
+    </div>
+</div>
+
+<div class="window note-window" id="note2-window">
+    <div class="window-titlebar">
+        <span>Note d’intention - Rounhaa</span>
+        <button class="close-btn">X</button>
+    </div>
+    <div class="window-content">
+         <p>J’imagine la plupart de mes visuels comme des affiches que l’on pourrait exposer dans un espace personnel, comme une chambre. Pour celui-ci, je me suis inspirée de la cover de l’album JAAFAR, notamment par l’utilisation des chaînes qui encerclent le sujet, symbole de tension et d’emprisonnement.</p>
+         <p>- - -</p>
+        <p>J’affectionne les ambiances sombres, avec un aspect volontairement « brut » et presque « sale », comme en témoignent les bordures usées de l’image. Ce choix esthétique correspond à l’univers musical de l’artiste, souvent marqué par une intensité dramatique et une certaine rugosité.</p>
+        <p>- - -</p>
+        <p>Pour le nom, j’ai choisi de modifier la typographie de la première lettre afin de la faire ressortir sans rompre l’équilibre général du visuel. Cette subtilité permet d’attirer l’œil tout en conservant une harmonie graphique.</p>
+    </div>
+</div>
+
+<div class="window note-window" id="note3-window">
+    <div class="window-titlebar">
+        <span>Note d’intention - Khali</span>
+        <button class="close-btn">X</button>
+    </div>
+    <div class="window-content">
+        <p>Pour ce visuel, je me suis inspiré des magazines des années 2000 à 2010, en reprenant leurs codes graphiques : contours blancs très lumineux et grain marqué sur l’image. Ces éléments apportent un aspect rétro tout en donnant de la force au sujet principal.</p>
+        <p>- - -</p>
+        <p>L’élément central, le chien, fait référence à celui présent dans le clip du titre « Khali il sait ». Sa posture agressive et la chaîne qui le retient traduisent une tension entre domination et contrôle, renforçant l’idée de puissance contenue. Ce choix visuel crée un contraste fort avec le fond doux composé de ciel et de nuages, qui évoque la liberté et la sérénité, en opposition à la violence et à l’énergie brute du chien.</p>
+        <p>- - -</p>
+        <p>Le titre en rouge, avec une typographie élégante et cursive, apporte une touche raffinée qui contrebalance la brutalité de l’image, tout en conservant une esthétique percutante. Les mentions « 2024 » et « SEPTEMBRE » ainsi que le texte en bas renforcent l’effet magazine et donnent au visuel une dimension narrative.</p>
+    </div>
+</div>
+
+<div class="window note-window" id="note4-window">
+    <div class="window-titlebar">
+        <span>Note d’intention - Yuu</span>
+        <button class="close-btn">X</button>
+    </div>
+    <div class="window-content">
+        <p>Pour ce visuel, j’ai voulu intégrer des éléments inspirés du cyberciglisme, un mouvement qui s’inscrit parfaitement dans une esthétique mystérieuse et inquiétante, créant ainsi une atmosphère immersive. La forêt sombre et brumeuse sert de décor principal, évoquant un lieu isolé et froid, en accord avec le titre « Là où il fait froid ».</p>
+        <p>- - -</p>
+        <p>Les yeux disséminés sur les troncs d’arbres sont ma touche personnelle : ils introduisent une dimension étrange et presque surnaturelle, comme si la nature observait silencieusement. Ce détail renforce le sentiment d’oppression et de paranoïa, invitant le spectateur à s’interroger sur ce qui est réel ou imaginaire. Cette intrusion visuelle donne plus de poids au titre et accentue la tension dramatique.</p>
+        <p>- - -</p>
+        <p>Les ornements graphiques et la typographie gothique viennent compléter l’univers visuel, en apportant une esthétique sombre et raffinée. L’ensemble vise à plonger le spectateur dans un décor à la fois beau et dérangeant, où la nature devient un personnage vivant et inquiétant.</p>
+    </div>
+</div>
+
+<div class="window note-window" id="note5-window">
+    <div class="window-titlebar">
+        <span>Note d’intention - Izu</span>
+        <button class="close-btn">X</button>
+    </div>
+    <div class="window-content">
+        <p>Ce visuel reprend les codes graphiques emblématiques des jaquettes de jeux vidéo, en particulier celles de la PlayStation 2, afin de créer un objet à la fois nostalgique et percutant. Le titre « Le Deuil des Étoiles » provient de la biographie de l’artiste, que j’ai intégré dans un design inspiré des franchises militaires et futuristes.</p>
+        <p>- - -</p>
+        <p>L’utilisation des couleurs dominantes : noir, rouge et orange – fait référence à l’univers visuel du jeu Call of Duty, renforçant l’idée d’intensité et de tension. Les éléments graphiques tels que l’arme détaillée, les icônes de classification ESRB et les logos de studios fictifs (Activision, Treyarch) viennent ancrer le visuel dans un registre réaliste, tout en jouant sur la culture gaming.</p>
+        <p>- - -</p>
+        <p>Le choix typographique et la mise en page respectent les codes des jaquettes officielles, créant un contraste entre la nostalgie du support physique et la modernité du concept. L’ensemble vise à susciter la curiosité et à plonger le spectateur dans un univers narratif fort, où la promesse d’action et de drame est omniprésente.</p>
+    </div>
+</div>
+
+
+        <!-- Fenêtre "Contact" -->
+<div class="window" id="contact-window">
+    <div class="window-titlebar">
+        <span>Contact</span>
+        <button class="close-btn">X</button>
+    </div>
+    <div class="window-content">
+
+  <!-- Bannière -->
+    <div class="window-banner">
+        <img src="images/banniere.png" alt="Bannière" />
+    </div>
+
+        <!-- Conteneur des images -->
+        <div class="contact-images">
+            <!-- Première image -->
+            <div class="contact-item">
+                <img src="images/logo insta.png" alt="Image 1">
+                <p>@bunny.wave</p>
+            </div>
+            <!-- Deuxième image -->
+            <div class="contact-item">
+                <img src="images/logo mail.png" alt="Image 2">
+                <p>elysespada@gmail.com</p>
+            </div>
+            <!-- Troisième image -->
+            <div class="contact-item">
+                <img src="images/logo tel.png" alt="Image 3">
+                <p>06 73 66 00 16</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Script -->
+    <script>
+        // ===== Rotation du logo =====
+        const logo = document.getElementById('logo');
+        const maxAngle = 15;
+        document.addEventListener('mousemove', e => {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const dx = e.clientX - centerX;
+            const dy = e.clientY - centerY;
+            const rotateY = (dx / centerX) * maxAngle;
+            const rotateX = (-dy / centerY) * maxAngle;
+            logo.style.transform = `translate(-50%, -50%) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        document.addEventListener('mouseleave', () => {
+            logo.style.transform = `translate(-50%, -50%) rotateX(0deg) rotateY(0deg)`;
+        });
+
+        // ===== Fonction fenêtres =====
+        function makeWindow(folderId, windowId) {
+            const folder = document.getElementById(folderId);
+            const windowEl = document.getElementById(windowId);
+            const closeBtn = windowEl.querySelector('.close-btn');
+            const titleBar = windowEl.querySelector('.window-titlebar');
+
+            if(folder) folder.addEventListener('click', () => windowEl.style.display = 'block');
+            closeBtn.addEventListener('click', () => windowEl.style.display = 'none');
+
+            let isDragging = false;
+            let offsetX = 0, offsetY = 0;
+            titleBar.addEventListener('mousedown', e => {
+                isDragging = true;
+                offsetX = e.clientX - windowEl.offsetLeft;
+                offsetY = e.clientY - windowEl.offsetTop;
+                titleBar.style.cursor = 'grabbing';
+            });
+            document.addEventListener('mousemove', e => {
+                if (!isDragging) return;
+                const x = e.clientX - offsetX;
+                const y = e.clientY - offsetY;
+                windowEl.style.left = x + 'px';
+                windowEl.style.top = y + 'px';
+            });
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    titleBar.style.cursor = 'grab';
+                }
+            });
+        }
+
+        // Fenêtres principales
+        makeWindow('about-folder', 'about-window');
+        makeWindow('portfolio-folder', 'portfolio-window');
+        makeWindow('contact-folder', 'contact-window');
+
+        // Notes d’intention
+        document.querySelectorAll('.note-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const noteId = btn.dataset.note + '-window';
+                document.getElementById(noteId).style.display = 'block';
+            });
+        });
+
+        document.querySelectorAll('.note-window').forEach(win => makeWindow(null, win.id));
+    </script>
+</body>
+

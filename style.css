@@ -1,0 +1,234 @@
+/* ===================== */
+/* Reset de base         */
+/* ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+/* ===================== */
+/* Section home (logo)   */
+/* ===================== */
+#home {
+    background: url("images/site.png") center/cover no-repeat;
+    position: fixed; /* reste en arrière-plan */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px; /* profondeur 3D pour l'effet du logo */
+    z-index: 1;
+}
+
+#logo {
+    position: absolute; /* ← parfait pour centrer */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+    width: 150px;
+    height: auto;
+    pointer-events: none;
+    transform-style: preserve-3d;
+    transition: transform 0.05s ease;
+    z-index: 2; /* devant le fond */
+}
+
+/* ===================== */
+/* Bureau Windows rétro   */
+/* ===================== */
+#desktop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    z-index: 3; /* devant le logo si nécessaire */
+}
+
+/* Dossiers sur le bureau */
+.folder {
+    width: 80px;
+    margin-right: 20px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.folder img {
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: 0 auto;
+}
+
+.folder p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #000;
+}
+
+/* Fenêtre rétro */
+.window {
+    position: absolute;
+    top: 100px;
+    left: 150px;
+    width: 100px;
+    height: 400px;
+    background-color: #c0c0c0;
+    border: 2px solid #fff; /* effet 3D Windows */
+    box-shadow: 2px 2px 0 #000;
+    display: none; /* cachée par défaut */
+    z-index: 4;
+}
+
+/* Barre de titre */
+.window-titlebar {
+    background: #000080;
+    color: #fff;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    cursor: move; /* futur drag & drop */
+}
+
+/* Bouton fermer */
+.close-btn {
+    background: #c0c0c0;
+    border: 1px solid #fff;
+    padding: 0 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Conteneur de la carte */
+.card-container {
+    perspective: 1000px;
+    width: 500px; /* largeur de la carte */
+    height: 600px; /* hauteur de la carte */
+    margin: 5px auto; /* centrer */
+}
+
+/* Carte */
+.card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+/* Flip au survol */
+.card-container:hover .card {
+    transform: rotateY(180deg);
+}
+
+/* Recto et verso */
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+/* Verso */
+.card-back {
+    transform: rotateY(180deg);
+}
+
+/* Images de la carte */
+.card-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+/* GIF superposé */
+.card-gif {
+    position: absolute;
+    top: 38%;   /* ajustable */
+    left: 5%;  /* ajustable */
+    width: 150px; /* redimensionnable */
+    height: auto;
+    pointer-events: none;
+}
+
+/* Contenu de la fenêtre */
+.window-content {
+    padding: 10px;
+    color: #000;
+    font-size: 14px;
+}
+
+/* Effet hover sur les images du portfolio */
+.portfolio-item img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-item img:hover {
+    transform: translateY(-5px); /* l'image "soulève" */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* ombre douce */
+}
+
+/* Effet hover sur les boutons */
+.note-btn {
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    background-color: #eee; /* couleur de base */
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.note-btn:hover {
+    background-color: #f82dcc; /* couleur au survol */
+    color: #000;
+    transform: translateY(-2px); /* léger "lift" */
+    cursor: pointer;
+}
+
+/* Conteneur des images contact */
+.contact-images {
+    display: flex;
+    justify-content: space-around; /* espace régulier entre les images */
+    align-items: flex-start;       /* aligne le haut des images */
+    margin-top: 100px;
+}
+
+.contact-item {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    width: 120px; /* largeur fixe pour que tout soit uniforme */
+}
+
+.contact-item img {
+    width: 80%;      /* prend la largeur du conteneur */
+    height: 90px;    /* fixe la hauteur pour aligner toutes les images */
+    object-fit: contrain; /* recadrage si nécessaire */
+    margin-bottom: 0px;
+}
+.window-banner {
+    width: 100%;
+    height: 120px; /* hauteur de ta bannière */
+    overflow: hidden;
+    margin-bottom: 10px; /* espace entre la bannière et le reste */
+}
+
+.window-banner img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover; /* l'image remplit toute la bannière sans déformation */
+}
