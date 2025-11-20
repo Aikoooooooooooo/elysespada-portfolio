@@ -48,9 +48,9 @@
             margin: 5px 0 0 0;
             font-size: 14px;
         }
-        #about-folder { top: 50px; left: 50px; }
-        #portfolio-folder { top: 50px; left: 150px; }
-        #contact-folder { top: 50px; left: 250px; }
+        #about-folder { top: 60px; left: 80px; }
+        #portfolio-folder { top: 60px; left: 180px; }
+        #contact-folder { top: 60px; left: 280px; }
 
         /* ===== Fenêtres ===== */
         .window {
@@ -121,7 +121,7 @@
         </div>
         <div class="folder" id="portfolio-folder">
             <img src="images/portfolio.png" alt="Portfolio">
-            <p>Portfolio</p>
+            <p>Production</p>
         </div>
         <div class="folder" id="contact-folder">
             <img src="images/contact.png" alt="Contact">
@@ -153,10 +153,9 @@
 
         <!-- Texte à propos -->
         <div style="line-height:1.5; max-width:550px;">
-            <p><strong>Je m'appelle Elyse Spada</strong>, passionnée par l’image et la communication, toujours à la recherche de nouvelles idées et expériences créatives.</p>
-            <p>Après un bac HLP et Audiovisuel au lycée Bristol à Cannes, j’ai poursuivi des études en Lettres modernes à la Sorbonne, avant de me spécialiser en BTS Communication à l’ISIFA Plus Values en alternance.</p>
-            <p>Aujourd’hui, je mets mes compétences au service de projets variés, alliant réflexion stratégique et créativité visuelle. Photoshop, Illustrator et autres outils de création sont mes terrains d’expérimentation quotidiens.</p>
-            <p>J’ai également créé Bunny, un personnage qui symbolise mes obsessions créatives, d’où le logo au lapin percé.</p>
+            <p>Je m'appelle <strong>Elyse Spada</strong> et je suis passionnée par l’image et la communication, toujours à la recherche de nouvelles idées et expériences créatives.</p>
+            <p>Après un baccalauréat HLP et Audiovisuel au lycée Bristol à Cannes, j’ai poursuivi des études en Lettres Modernes à la Sorbonne, avant de me spécialiser en BTS Communication à l’ISIFA Plus Values, en recherche d'alternance.</p>
+            <p>Je maîtrise les outils essentiels de la création visuelle et de la communication : Photoshop, Illustrator, After Effects, InDesign, que j’utilise pour concevoir des projets innovants, alliant stratégie et créativité.
         </div>
     </div>
 </div>
@@ -164,7 +163,7 @@
 <!-- Fenêtre "Portfolio" -->
 <div class="window" id="portfolio-window" style="width:900px; height:650px;">
     <div class="window-titlebar">
-        <span>Portfolio</span>
+        <span>Production</span>
         <button class="close-btn">X</button>
     </div>
     <div class="window-content" style="overflow-y:auto; height:calc(100% - 35px); padding:10px; display:flex; flex-wrap:wrap; gap:40px;">
@@ -369,3 +368,133 @@
     </script>
 </body>
 
+<div id="fissure">
+    <img src="images/fissure.gif" alt="fissure">
+</div>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bureau Bunny</title>
+
+<!-- Font Awesome pour les icônes -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* Reset de base */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00008B; /* fond style bureau */
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+/* Bureau */
+#desktop {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Dossiers */
+.folder {
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    position: absolute; /* pour pouvoir les déplacer */
+    z-index: 2;
+}
+
+.folder img {
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: 0 auto;
+}
+
+.folder p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: white;
+}
+
+/* Barre Windows 7 */
+#taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: #5e5e5e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+/* Sections de la barre */
+.start-section, .center-section, .right-section {
+    display: flex;
+    align-items: center;
+}
+
+.start-logo {
+    color: white;
+    font-size: 24px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.icon {
+    color: white;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.clock {
+    color: white;
+    margin-left: 10px;
+    font-family: Arial, sans-serif;
+}
+</style>
+</head>
+<body>
+
+<!-- Barre Windows -->
+<div id="taskbar">
+    <div class="start-section">
+        <i class="fa-brands fa-windows start-logo"></i>
+    </div>
+    <div class="center-section">
+        <!-- icônes d'applications ouvertes -->
+    </div>
+    <div class="right-section">
+        <i class="fa-solid fa-wifi icon"></i>
+        <i class="fa-solid fa-volume-high icon"></i>
+        <span class="clock" id="clock">12:34</span>
+    </div>
+</div>
+
+<script>
+// Clock en temps réel
+function updateClock() {
+    const clock = document.getElementById('clock');
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    clock.textContent = `${hours}:${minutes}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+
+</body>
+</html>
