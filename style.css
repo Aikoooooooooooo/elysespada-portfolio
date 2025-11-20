@@ -253,7 +253,7 @@ html, body {
 #fissure {
     position: absolute;
     top: -110px;
-    right: 700px;
+    right: 50px;
     width: 50px;
     height: auto;
     pointer-events: none;
@@ -296,3 +296,4 @@ html, body {
     margin-left: 10px;
     font-family: Arial, sans-serif;
 }
+
