@@ -250,16 +250,6 @@ html, body {
     object-fit: cover; /* ou contain si tu veux que l'image garde ses proportions */
 }
 
-#fissure {
-    position: absolute;
-    top: -110px;
-    right: 50px;
-    width: 50px;
-    height: auto;
-    pointer-events: none;
-    transform: scaleX(1) scale(1);
-}
-
 #taskbar {
     position: fixed;
     bottom: 0;
@@ -296,4 +286,5 @@ html, body {
     margin-left: 10px;
     font-family: Arial, sans-serif;
 }
+
 
