@@ -62,6 +62,7 @@ html, body {
     text-align: center;
     cursor: pointer;
     user-select: none;
+    z-index: 2;         /* doit être plus grand que la barre */
 }
 
 .folder img {
@@ -217,7 +218,7 @@ html, body {
 .contact-item img {
     width: 80%;      /* prend la largeur du conteneur */
     height: 90px;    /* fixe la hauteur pour aligner toutes les images */
-    object-fit: contrain; /* recadrage si nécessaire */
+    object-fit: contain; /* recadrage si nécessaire */
     margin-bottom: 0px;
 }
 .window-banner {
@@ -231,4 +232,67 @@ html, body {
     width: 100%;
     height: 120%;
     object-fit: cover; /* l'image remplit toute la bannière sans déformation */
+}
+
+#frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* pour ne pas gêner les clics sur les fenêtres */
+    z-index: 3; /* entre le desktop et les fenêtres */
+}
+
+#frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ou contain si tu veux que l'image garde ses proportions */
+}
+
+#fissure {
+    position: absolute;
+    top: -110px;
+    right: 700px;
+    width: 50px;
+    height: auto;
+    pointer-events: none;
+    transform: scaleX(1) scale(1);
+}
+
+#taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;              /* hauteur de la barre */
+    background: #2b2b2b;       /* couleur Windows 7 dark taskbar */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+.start-section, .center-section, .right-section {
+    display: flex;
+    align-items: center;
+}
+
+.start-logo {
+    width: 30px;
+    height: 30px;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.clock {
+    color: white;
+    margin-left: 10px;
+    font-family: Arial, sans-serif;
 }
