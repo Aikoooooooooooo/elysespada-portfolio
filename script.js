@@ -161,30 +161,6 @@ volumeControl.addEventListener('input', () => {
     audioPlayer.volume = volumeControl.value;
 });
 
-// Sélection de la fenêtre
-const windows = document.querySelectorAll('.window');
-
-windows.forEach(win => {
-    let offsetX = 0, offsetY = 0, isDragging = false;
-
-    // PC drag
-    win.querySelector('.window-titlebar').addEventListener('mousedown', (e) => {
-        isDragging = true;
-        offsetX = e.clientX - win.offsetLeft;
-        offsetY = e.clientY - win.offsetTop;
-        win.style.zIndex = 1000; // Met la fenêtre devant
-    });
-
-    document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        win.style.left = e.clientX - offsetX + 'px';
-        win.style.top = e.clientY - offsetY + 'px';
-    });
-
-    document.addEventListener('mouseup', () => {
-        isDragging = false;
-    });
-
     // Mobile drag
     win.querySelector('.window-titlebar').addEventListener('touchstart', (e) => {
         isDragging = true;
@@ -205,3 +181,4 @@ windows.forEach(win => {
         isDragging = false;
     });
 });
+
