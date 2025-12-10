@@ -146,3 +146,4 @@ titleBar.addEventListener('touchmove', e => {
     const touch = e.touches[0];
     drag(touch.clientX, touch.clientY);
 });
+
