@@ -55,15 +55,18 @@ function makeDraggable(win) {
 
     // Mobile
     titleBar.addEventListener('touchstart', e => {
+        e.preventDefault(); // empêche le scroll
         const touch = e.touches[0];
         startDrag(touch.clientX, touch.clientY);
     });
     titleBar.addEventListener('touchmove', e => {
+        e.preventDefault();
         const touch = e.touches[0];
         drag(touch.clientX, touch.clientY);
     });
     titleBar.addEventListener('touchend', endDrag);
 }
+
 
 /* ===== Gestion des fenêtres ===== */
 document.querySelectorAll('.window').forEach(win => {
@@ -73,6 +76,7 @@ document.querySelectorAll('.window').forEach(win => {
     const closeBtn = win.querySelector('.close-btn');
     if (closeBtn) closeBtn.addEventListener('click', () => win.style.display = 'none');
 });
+
 
 /* ===== Ouvrir fenêtres via dossiers ===== */
 ['about-folder', 'portfolio-folder', 'contact-folder'].forEach(folderId => {
@@ -84,6 +88,7 @@ document.querySelectorAll('.window').forEach(win => {
         folder.addEventListener('click', () => win.style.display = 'block');
     }
 });
+
 
 /* ===== Ouvrir fenêtres via boutons ===== */
 document.querySelectorAll('.note-btn').forEach(btn => {
@@ -129,15 +134,3 @@ if (playBtn && audioPlayer) {
         audioPlayer.volume = volumeControl.value;
     });
 }
-
-titleBar.addEventListener('touchstart', e => {
-    e.preventDefault(); // empêche le scroll
-    const touch = e.touches[0];
-    startDrag(touch.clientX, touch.clientY);
-});
-
-titleBar.addEventListener('touchmove', e => {
-    e.preventDefault(); // empêche le scroll
-    const touch = e.touches[0];
-    drag(touch.clientX, touch.clientY);
-});
