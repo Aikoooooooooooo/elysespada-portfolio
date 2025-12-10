@@ -14,8 +14,7 @@ document.addEventListener('mouseleave', () => {
     logo.style.transform = 'translate(-50%, -50%) rotateX(0deg) rotateY(0deg)';
 });
 
-
-/* ===== Drag & Drop pour PC + Mobile ===== */
+/* ===== Drag & Drop PC + Mobile ===== */
 function makeDraggable(win) {
     const titleBar = win.querySelector('.window-titlebar');
     if (!titleBar) return;
@@ -55,7 +54,7 @@ function makeDraggable(win) {
 
     // Mobile
     titleBar.addEventListener('touchstart', e => {
-        e.preventDefault(); // empêche le scroll
+        e.preventDefault();
         const touch = e.touches[0];
         startDrag(touch.clientX, touch.clientY);
     });
@@ -67,70 +66,62 @@ function makeDraggable(win) {
     titleBar.addEventListener('touchend', endDrag);
 }
 
-
 /* ===== Gestion des fenêtres ===== */
-document.querySelectorAll('.window').forEach(win => {
+function setupWindow(win) {
+    if (!win) return;
+
+    // Drag + ferme
     makeDraggable(win);
 
-    // Fermer la fenêtre
     const closeBtn = win.querySelector('.close-btn');
     if (closeBtn) closeBtn.addEventListener('click', () => win.style.display = 'none');
-});
+}
 
+/* ===== Initialisation des fenêtres ===== */
+document.querySelectorAll('.window').forEach(win => setupWindow(win));
 
 /* ===== Ouvrir fenêtres via dossiers ===== */
-['about-folder', 'portfolio-folder', 'contact-folder'].forEach(folderId => {
+['about-folder','portfolio-folder','contact-folder','moi-folder','musique-folder','chat-folder','poubelle-folder'].forEach(folderId => {
     const folder = document.getElementById(folderId);
+    if(!folder) return;
     const winId = folderId.replace('-folder','-window');
     const win = document.getElementById(winId);
+    if(!win) return;
 
-    if (folder && win) {
-        folder.addEventListener('click', () => win.style.display = 'block');
-    }
+    folder.addEventListener('click', () => win.style.display = 'block');
 });
-
 
 /* ===== Ouvrir fenêtres via boutons ===== */
 document.querySelectorAll('.note-btn').forEach(btn => {
     const noteId = btn.dataset.note + '-window';
-    const noteWindow = document.getElementById(noteId);
-    if (noteWindow) {
-        btn.addEventListener('click', () => noteWindow.style.display = 'block');
-    }
-});
+    const noteWin = document.getElementById(noteId);
+    if(!noteWin) return;
 
+    btn.addEventListener('click', () => {
+        noteWin.style.display = 'block';
+        setupWindow(noteWin); // s'assure que le drag + ferme fonctionne
+    });
+});
 
 /* ===== Lecteur audio ===== */
 const audioPlayer = document.getElementById('audio-player');
 const playBtn = document.getElementById('play-btn');
+const pauseBtn = document.getElementById('pause-btn');
+const stopBtn = document.getElementById('stop-btn');
 const progressBar = document.getElementById('progress-bar');
-const volumeControl = document.getElementById('volume-control');
+const volumeControl = document.getElementById('volume-slider');
 
-if (playBtn && audioPlayer) {
-    // Play / Pause
-    playBtn.addEventListener('click', () => {
-        if (audioPlayer.paused) {
-            audioPlayer.play();
-            playBtn.textContent = '❚❚';
-        } else {
-            audioPlayer.pause();
-            playBtn.textContent = '►';
-        }
-    });
+if(audioPlayer) {
+    if(playBtn) playBtn.addEventListener('click', () => audioPlayer.play());
+    if(pauseBtn) pauseBtn.addEventListener('click', () => audioPlayer.pause());
+    if(stopBtn) stopBtn.addEventListener('click', () => { audioPlayer.pause(); audioPlayer.currentTime=0; });
+    if(progressBar) progressBar.addEventListener('input', () => audioPlayer.currentTime = progressBar.value);
+    if(volumeControl) volumeControl.addEventListener('input', e => audioPlayer.volume = e.target.value);
 
-    // Mettre à jour la barre de progression
     audioPlayer.addEventListener('timeupdate', () => {
-        progressBar.max = audioPlayer.duration;
-        progressBar.value = audioPlayer.currentTime;
-    });
-
-    // Changer la position de lecture
-    progressBar.addEventListener('input', () => {
-        audioPlayer.currentTime = progressBar.value;
-    });
-
-    // Contrôle du volume
-    volumeControl.addEventListener('input', () => {
-        audioPlayer.volume = volumeControl.value;
+        if(progressBar) {
+            progressBar.max = audioPlayer.duration;
+            progressBar.value = audioPlayer.currentTime;
+        }
     });
 }
