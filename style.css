@@ -286,3 +286,120 @@ html, body {
     margin-left: 10px;
     font-family: Arial, sans-serif;
 }
+
+#moi-folder { top: 160px; left: 80px; } /* Ajuste la position si besoin */
+#musique-folder { top: 60px; left: 370px; }
+#chat-folder { top: 60px; left: 460px; }
+
+/* ===== Lecteur audio retro Windows 95 ===== */
+#audio-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #c0c0c0;
+    border: 2px solid #fff;
+    box-shadow: 2px 2px 0 #000 inset;
+    padding: 10px;
+}
+
+.audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.audio-controls button {
+    width: 35px;
+    height: 35px;
+    background-color: #c0c0c0;
+    border: 2px solid #fff;
+    box-shadow: 2px 2px 0 #000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.audio-controls button:active {
+    box-shadow: inset 2px 2px 0 #000;
+}
+
+.audio-controls input[type=range] {
+    flex: 1;
+    height: 10px;
+    background: #fff;
+    border: 2px solid #fff;
+    box-shadow: 2px 2px 0 #000 inset;
+    cursor: pointer;
+}
+
+
+/* Fenêtre Moi avec scroll */
+#moi-window {
+    width: 600px;
+    height: 500px; /* hauteur fixe pour activer le scroll */
+}
+
+.moi-content {
+    padding: 20px;
+    height: calc(100% - 35px); /* 35px = barre de titre */
+    overflow-y: auto;
+}
+
+/* Scroll joli */
+.moi-content::-webkit-scrollbar {
+    width: 8px;
+}
+.moi-content::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 4px;
+}
+.moi-content::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+
+/* Conteneur horizontal */
+.moi-container {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+/* Les rectangles */
+.moi-box {
+    flex: 1;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Titres */
+.moi-box h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* Ligne de logos */
+.logo-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Logos */
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+/* Centre d’intérêt */
+.moi-center {
+    margin-top: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
