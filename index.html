@@ -1,136 +1,112 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Despair Kingdom</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Despair Kingdom</title>
 
-    <!-- Font Awesome pour icônes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Font Awesome pour icônes -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CSS propre -->
-    <link rel="stylesheet" href="style.css">
+<!-- CSS externe -->
+<link rel="stylesheet" href="style.css">
 
-    <style>
-        /* ===== Reset & Bureau ===== */
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #008080;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-        #desktop {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
+<style>
+    /* ===== Reset & Bureau ===== */
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #008080;
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+    }
 
-        /* ===== Logo central ===== */
-        #home {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-        }
-        #logo {
-            width: 200px;
-            transition: transform 0.1s;
-        }
+    #desktop { position: relative; width: 100%; height: 100%; }
 
-        /* ===== Dossiers ===== */
-        .folder {
-            position: absolute;
-            width: 80px;
-            text-align: center;
-            cursor: pointer;
-            color: white;
-            user-select: none;
-            z-index: 2;
-        }
-        .folder img {
-            width: 60px;
-            height: 60px;
-            display: block;
-            margin: 0 auto;
-        }
-        .folder p {
-            margin-top: 5px;
-            font-size: 14px;
-        }
+    /* ===== Logo central ===== */
+    #home {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+    #logo { width: 200px; transition: transform 0.1s; }
 
-        /* ===== Fenêtres ===== */
-        .window {
-            position: absolute;
-            top: 100px;
-            left: 150px;
-            width: 650px;
-            height: 400px;
-            background-color: #c0c0c0;
-            border: 2px solid #fff;
-            box-shadow: 2px 2px 0 #000;
-            display: none;
-            z-index: 4;
-        }
-        .window-titlebar {
-            cursor: grab;
-            background-color: #00008B;
-            color: #fff;
-            padding: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            touch-action: none; /* important pour mobile */
-        }
-        .window-content {
-            padding: 10px;
-            overflow-y: auto;
-            height: calc(100% - 35px);
-        }
-        .close-btn {
-            background: red;
-            border: none;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            width: 25px;
-            height: 25px;
-            border-radius: 3px;
-        }
+    /* ===== Dossiers ===== */
+    .folder {
+        position: absolute;
+        width: 80px;
+        text-align: center;
+        cursor: pointer;
+        color: white;
+        user-select: none;
+        z-index: 2;
+    }
+    .folder img { width: 60px; height: 60px; display: block; margin: 0 auto; }
+    .folder p { margin-top: 5px; font-size: 14px; }
 
-        /* ===== Notes d’intention ===== */
-        .note-window { width: 400px; height: 300px; }
+    /* ===== Fenêtres ===== */
+    .window {
+        position: absolute;
+        top: 100px;
+        left: 150px;
+        width: 650px;
+        height: 400px;
+        background-color: #c0c0c0;
+        border: 2px solid #fff;
+        box-shadow: 2px 2px 0 #000;
+        display: none;
+        z-index: 4;
+    }
+    .window-titlebar {
+        cursor: grab;
+        background-color: #00008B;
+        color: #fff;
+        padding: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        touch-action: none;
+    }
+    .window-content { padding: 10px; overflow-y: auto; height: calc(100% - 35px); }
+    .close-btn {
+        background: red;
+        border: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        width: 25px;
+        height: 25px;
+        border-radius: 3px;
+    }
 
-        /* ===== Taskbar ===== */
-        #taskbar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 40px;
-            background: #5e5e5e;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 10px;
-            box-sizing: border-box;
-            z-index: 100;
-        }
-        .start-section, .center-section, .right-section {
-            display: flex;
-            align-items: center;
-        }
-        .start-logo, .icon {
-            color: white;
-            cursor: pointer;
-        }
-        .start-logo { font-size: 24px; margin-right: 10px; }
-        .icon { font-size: 18px; margin-left: 10px; }
-        .clock { color: white; margin-left: 10px; font-family: Arial, sans-serif; }
-    </style>
+    /* ===== Notes d’intention ===== */
+    .note-window { width: 400px; height: 300px; }
+
+    /* ===== Taskbar ===== */
+    #taskbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background: #5e5e5e;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+        box-sizing: border-box;
+        z-index: 100;
+    }
+    .start-section, .center-section, .right-section { display: flex; align-items: center; }
+    .start-logo, .icon { color: white; cursor: pointer; }
+    .start-logo { font-size: 24px; margin-right: 10px; }
+    .icon { font-size: 18px; margin-left: 10px; }
+    .clock { color: white; margin-left: 10px; font-family: Arial, sans-serif; }
+</style>
 </head>
 
 <body>
@@ -142,81 +118,58 @@
     <!-- Bureau -->
     <div id="desktop">
         <!-- Dossiers -->
-        <div class="folder" id="about-folder">
+        <div class="folder" id="about-folder" style="top:60px; left:80px;">
             <img src="images/ton-icone.png" alt="À propos">
             <p>À propos</p>
         </div>
-        <div class="folder" id="moi-folder">
+        <div class="folder" id="moi-folder" style="top:60px; left:180px;">
             <img src="images/livre logo.png" alt="Moi">
             <p>Moi</p>
         </div>
-        <div class="folder" id="portfolio-folder">
+        <div class="folder" id="portfolio-folder" style="top:60px; left:280px;">
             <img src="images/portfolio.png" alt="Portfolio">
             <p>Productions</p>
         </div>
-        <div class="folder" id="contact-folder">
+        <div class="folder" id="contact-folder" style="top:60px; left:380px;">
             <img src="images/contact.png" alt="Contact">
             <p>Contact</p>
         </div>
-        <div class="folder" id="musique-folder">
+        <div class="folder" id="musique-folder" style="top:60px; left:480px;">
             <img src="images/logo musique.png" alt="Musique">
             <p>Musique</p>
         </div>
-        <div class="folder" id="chat-folder">
+        <div class="folder" id="chat-folder" style="top:60px; left:580px;">
             <img src="images/logo chat.png" alt="Chat">
             <p>Chat</p>
         </div>
-        <div class="folder" id="poubelle-folder" style="bottom: 60px; right:20px; position:absolute;">
+        <div class="folder" id="poubelle-folder" style="bottom:60px; right:20px;">
             <img src="images/logo poubelle.png" alt="Poubelle">
             <p>Poubelle</p>
         </div>
 
-        <!-- Fenêtres (exemple, à compléter avec toutes tes fenêtres existantes) -->
+        <!-- Fenêtres (exemple, à compléter) -->
         <div class="window" id="about-window">
-            <div class="window-titlebar">
-                <span>À propos</span>
-                <button class="close-btn">X</button>
-            </div>
-            <div class="window-content">
-                <p>Contenu de la fenêtre À propos</p>
-            </div>
+            <div class="window-titlebar"><span>À propos</span><button class="close-btn">X</button></div>
+            <div class="window-content"><p>Contenu de la fenêtre À propos</p></div>
         </div>
 
         <div class="window" id="moi-window">
-            <div class="window-titlebar">
-                <span>Moi</span>
-                <button class="close-btn">X</button>
-            </div>
-            <div class="window-content">
-                <p>Contenu de la fenêtre Moi</p>
-            </div>
+            <div class="window-titlebar"><span>Moi</span><button class="close-btn">X</button></div>
+            <div class="window-content"><p>Contenu de la fenêtre Moi</p></div>
         </div>
 
         <div class="window" id="portfolio-window">
-            <div class="window-titlebar">
-                <span>Productions</span>
-                <button class="close-btn">X</button>
-            </div>
-            <div class="window-content">
-                <p>Contenu Portfolio</p>
-            </div>
+            <div class="window-titlebar"><span>Productions</span><button class="close-btn">X</button></div>
+            <div class="window-content"><p>Contenu Portfolio</p></div>
         </div>
 
         <div class="window" id="contact-window">
-            <div class="window-titlebar">
-                <span>Contact</span>
-                <button class="close-btn">X</button>
-            </div>
-            <div class="window-content">
-                <p>Contenu Contact</p>
-            </div>
+            <div class="window-titlebar"><span>Contact</span><button class="close-btn">X</button></div>
+            <div class="window-content"><p>Contenu Contact</p></div>
         </div>
 
         <div class="window" id="musique-window">
-            <div class="window-titlebar">
-                <span>Musique</span>
-                <button class="close-btn">X</button>
-            </div>
+            <div class="window-titlebar"><span>Musique</span><button class="close-btn">X</button></div>
             <div class="window-content">
                 <audio id="audio-player" src="audio/ton morceau.mp3"></audio>
                 <div class="retro-controls">
@@ -231,10 +184,7 @@
         </div>
 
         <div class="window" id="chat-window">
-            <div class="window-titlebar">
-                <span>Chat</span>
-                <button class="close-btn">X</button>
-            </div>
+            <div class="window-titlebar"><span>Chat</span><button class="close-btn">X</button></div>
             <div class="window-content" id="chat-messages" style="display:flex; flex-direction:column; justify-content:flex-end; gap:5px; overflow-y:auto;"></div>
             <div style="display:flex; gap:5px; padding:10px;">
                 <input type="text" id="chat-input" placeholder="Tape ton message..." style="flex:1;">
@@ -244,22 +194,16 @@
         </div>
 
         <div class="window" id="poubelle-window">
-            <div class="window-titlebar">
-                <span>Poubelle</span>
-                <button class="close-btn">X</button>
-            </div>
+            <div class="window-titlebar"><span>Poubelle</span><button class="close-btn">X</button></div>
             <div class="window-content" style="display:flex; justify-content:center; align-items:center; height:100%;">
                 <img src="images/ton-gif.gif" alt="GIF" style="max-width:100%; max-height:100%;">
             </div>
         </div>
-
     </div>
 
     <!-- Taskbar -->
     <div id="taskbar">
-        <div class="start-section">
-            <i class="fa-brands fa-windows start-logo"></i>
-        </div>
+        <div class="start-section"><i class="fa-brands fa-windows start-logo"></i></div>
         <div class="center-section"></div>
         <div class="right-section">
             <i class="fa-solid fa-wifi icon"></i>
@@ -272,3 +216,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
