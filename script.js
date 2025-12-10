@@ -129,3 +129,15 @@ if (playBtn && audioPlayer) {
         audioPlayer.volume = volumeControl.value;
     });
 }
+
+titleBar.addEventListener('touchstart', e => {
+    e.preventDefault(); // empêche le scroll
+    const touch = e.touches[0];
+    startDrag(touch.clientX, touch.clientY);
+});
+
+titleBar.addEventListener('touchmove', e => {
+    e.preventDefault(); // empêche le scroll
+    const touch = e.touches[0];
+    drag(touch.clientX, touch.clientY);
+});
