@@ -4,19 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Despair Kingdom</title>
+
+    <!-- Font Awesome pour icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS propre -->
     <link rel="stylesheet" href="style.css">
+
     <style>
-        /* ===== Bureau ===== */
-        body {
+        /* ===== Reset & Bureau ===== */
+        html, body {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #008080;
             font-family: Arial, sans-serif;
-            background-color: #008080; /* couleur rétro Windows */
             overflow: hidden;
         }
         #desktop {
             position: relative;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
         }
 
         /* ===== Logo central ===== */
@@ -39,18 +48,19 @@
             text-align: center;
             cursor: pointer;
             color: white;
+            user-select: none;
+            z-index: 2;
         }
         .folder img {
             width: 60px;
             height: 60px;
+            display: block;
+            margin: 0 auto;
         }
         .folder p {
-            margin: 5px 0 0 0;
+            margin-top: 5px;
             font-size: 14px;
         }
-        #about-folder { top: 60px; left: 80px; }
-        #portfolio-folder { top: 60px; left: 180px; }
-        #contact-folder { top: 60px; left: 280px; }
 
         /* ===== Fenêtres ===== */
         .window {
@@ -73,6 +83,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            touch-action: none; /* important pour mobile */
         }
         .window-content {
             padding: 10px;
@@ -90,39 +101,55 @@
             border-radius: 3px;
         }
 
-        /* GIF container */
-        .gif-container img {
-            width: 200px;
-            height: 200px;
-            border: 1px solid #000;
-        }
-        .gif-container {
-            position: absolute;
-            top: 50px;
-            left: 20px;
-        }
-
-        /* Notes fenêtre */
+        /* ===== Notes d’intention ===== */
         .note-window { width: 400px; height: 300px; }
+
+        /* ===== Taskbar ===== */
+        #taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: #5e5e5e;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            box-sizing: border-box;
+            z-index: 100;
+        }
+        .start-section, .center-section, .right-section {
+            display: flex;
+            align-items: center;
+        }
+        .start-logo, .icon {
+            color: white;
+            cursor: pointer;
+        }
+        .start-logo { font-size: 24px; margin-right: 10px; }
+        .icon { font-size: 18px; margin-left: 10px; }
+        .clock { color: white; margin-left: 10px; font-family: Arial, sans-serif; }
     </style>
 </head>
+
 <body>
     <!-- Logo central -->
     <section id="home">
         <img src="images/logo.png" alt="Mon Logo" id="logo">
     </section>
 
-    <!-- Bureau Windows rétro -->
+    <!-- Bureau -->
     <div id="desktop">
         <!-- Dossiers -->
         <div class="folder" id="about-folder">
             <img src="images/ton-icone.png" alt="À propos">
             <p>À propos</p>
         </div>
-            <div class="folder" id="moi-folder">
-    <img src="images/livre logo.png" alt="Moi">
-    <p>Moi</p>
-</div>
+        <div class="folder" id="moi-folder">
+            <img src="images/livre logo.png" alt="Moi">
+            <p>Moi</p>
+        </div>
         <div class="folder" id="portfolio-folder">
             <img src="images/portfolio.png" alt="Portfolio">
             <p>Productions</p>
@@ -135,625 +162,113 @@
             <img src="images/logo musique.png" alt="Musique">
             <p>Musique</p>
         </div>
-    
-       <!-- Fenêtre "À propos" -->
-<div class="window" id="about-window" style="width:600px; height:auto;">
-    <div class="window-titlebar">
-        <span>À propos</span>
-        <button class="close-btn">X</button>
-    </div>
-    <div class="window-content" style="display:flex; flex-direction:column; align-items:center; padding:20px; gap:20px;">
-        <!-- Carte ID -->
-        <div class="card-container">
-            <div class="card">
-                <div class="card-front">
-                    <img src="images/carte haut.png" alt="Recto carte" class="card-image">
-                    <img src="images/GIF.gif" alt="Animation" class="card-gif">
+        <div class="folder" id="chat-folder">
+            <img src="images/logo chat.png" alt="Chat">
+            <p>Chat</p>
+        </div>
+        <div class="folder" id="poubelle-folder" style="bottom: 60px; right:20px; position:absolute;">
+            <img src="images/logo poubelle.png" alt="Poubelle">
+            <p>Poubelle</p>
+        </div>
+
+        <!-- Fenêtres (exemple, à compléter avec toutes tes fenêtres existantes) -->
+        <div class="window" id="about-window">
+            <div class="window-titlebar">
+                <span>À propos</span>
+                <button class="close-btn">X</button>
+            </div>
+            <div class="window-content">
+                <p>Contenu de la fenêtre À propos</p>
+            </div>
+        </div>
+
+        <div class="window" id="moi-window">
+            <div class="window-titlebar">
+                <span>Moi</span>
+                <button class="close-btn">X</button>
+            </div>
+            <div class="window-content">
+                <p>Contenu de la fenêtre Moi</p>
+            </div>
+        </div>
+
+        <div class="window" id="portfolio-window">
+            <div class="window-titlebar">
+                <span>Productions</span>
+                <button class="close-btn">X</button>
+            </div>
+            <div class="window-content">
+                <p>Contenu Portfolio</p>
+            </div>
+        </div>
+
+        <div class="window" id="contact-window">
+            <div class="window-titlebar">
+                <span>Contact</span>
+                <button class="close-btn">X</button>
+            </div>
+            <div class="window-content">
+                <p>Contenu Contact</p>
+            </div>
+        </div>
+
+        <div class="window" id="musique-window">
+            <div class="window-titlebar">
+                <span>Musique</span>
+                <button class="close-btn">X</button>
+            </div>
+            <div class="window-content">
+                <audio id="audio-player" src="audio/ton morceau.mp3"></audio>
+                <div class="retro-controls">
+                    <button id="play-btn">▶</button>
+                    <button id="pause-btn">❚❚</button>
+                    <button id="stop-btn">■</button>
                 </div>
-                <div class="card-back">
-                    <img src="images/carte bas.png" alt="Verso carte" class="card-image">
+                <div class="retro-volume">
+                    Volume: <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
                 </div>
             </div>
         </div>
 
-        <!-- Texte à propos -->
-        <div style="line-height:1.5; max-width:550px;">
-            <p>Je m'appelle <strong>Elyse Spada</strong> ...</p>
-        </div>
-    </div>
-</div>
-
-<!-- Fenêtre "Moi" -->
-<div class="window" id="moi-window" style="width:600px; max-height:500px;">
-    <div class="window-titlebar">
-        <span>Moi</span>
-        <button class="close-btn">X</button>
-    </div>
-
-    <div class="window-content moi-content">
-
-        <!-- Parcours / Objectifs -->
-        <div class="moi-container">
-            <div class="moi-box">
-                <h3>Mon Parcours</h3>
-                <p>→ J'ai fait un bac avec les spécialités HLP et cinéma-audiovisuelle</p>
-                <p>→ Par la suite j'ai fait une année de licence en lettres modernes à la sorbonne sur le campus de Malsherbes tout en travaillant au Mcdonald dans les galeries des Champs Elysées.</p>
-                <p>→ Après cette année de fac j'ai décidé de m'orienter dans la communication qui est un milieu qui m'attirer déjà depuis le lycée. J'ai connu l'école Isifa plus values grâce à Parcoursup.</p>
-                <p>→ J'ai eu l'opportunité de travailler en tant qu'alternante pour la compagnie de théâtre Ideal Nova pendant 4 mois.</p>
-                <p>→ Je suis encore à la recherche d'une alternance dans le dommaine de la communication.</p>
+        <div class="window" id="chat-window">
+            <div class="window-titlebar">
+                <span>Chat</span>
+                <button class="close-btn">X</button>
             </div>
-            <div class="moi-box">
-                <h3>Mes Objectifs</h3>
-                <p>→ Après avoir validé mon BTS communication, je souhaiterais continuer mes études jusqu'au master probablement dans une filière plus créative.</p>
-                <p>→ J'ai choisis la communication car je souhaite travailler dans l'univers de la musique, m'occuper des artistes, de leurs developpements, les aider à créer leurs pâtes artistiques, communautés, stratégies et ect</p>
+            <div class="window-content" id="chat-messages" style="display:flex; flex-direction:column; justify-content:flex-end; gap:5px; overflow-y:auto;"></div>
+            <div style="display:flex; gap:5px; padding:10px;">
+                <input type="text" id="chat-input" placeholder="Tape ton message..." style="flex:1;">
+                <button id="chat-send">Envoyer</button>
+                <button id="clear-chat">Vider le chat</button>
             </div>
         </div>
 
-        <!-- Logos -->
-        <div class="logo-row">
-            <img src="images/logo-ps.png" alt="Photoshop" class="logo">
-            <img src="images/logo-ai.png" alt="Illustrator" class="logo">
-            <img src="images/logo-ae.png" alt="After Effects" class="logo">
-            <img src="images/logo-id.png" alt="InDesign" class="logo">
-        </div>
-
-        <!-- Centre d'intérêt -->
-        <div class="moi-center">
-            <h3>Centre d'intérêt</h3>
-            <p>.</p>
-            <p>→ J'aime énormement la musique, j'aime décourvivre de nouveaux styles, voir ce qui se fait dans les différents pays</p>
-            <p>→ Je pesse la plus part de mon temps sur photoshop et after effects, j'aime créer et imaginer de nouveaux design et repondre aux demandes</p>
-            <p>→ J'apprécie les films, series et animés, c'est d'ailleurs pour ça qu'au lycée j'ai choisis la spécialité audeivisuelle. J'aime l'image et surtout le grain, la couleur du réalisateur Tim Burton depuis que je suis petite. Naturellement attirer vers le sombre, le moche beau.</p>
+        <div class="window" id="poubelle-window">
+            <div class="window-titlebar">
+                <span>Poubelle</span>
+                <button class="close-btn">X</button>
+            </div>
+            <div class="window-content" style="display:flex; justify-content:center; align-items:center; height:100%;">
+                <img src="images/ton-gif.gif" alt="GIF" style="max-width:100%; max-height:100%;">
+            </div>
         </div>
 
     </div>
-</div>
 
-
-<!-- Fenêtre "Portfolio" -->
-<div class="window" id="portfolio-window" style="width:900px; height:650px;">
-    <div class="window-titlebar">
-        <span>Productions</span>
-        <button class="close-btn">X</button>
-    </div>
-    <div class="window-content" style="overflow-y:auto; height:calc(100% - 35px); padding:10px; display:flex; flex-wrap:wrap; gap:40px;">
-        <!-- Visuel 1 -->
-        <div class="portfolio-item" style="flex:1 1 calc(50% - 20px); box-sizing:border-box;">
-            <img src="images/34myrphu la chouette - Copie.png" alt="Visuel 1" style="width:100%; display:block; margin-bottom:5px;">
-            <button class="note-btn" data-note="note1" style="cursor:pointer;">➡ Note d’intention</button>
+    <!-- Taskbar -->
+    <div id="taskbar">
+        <div class="start-section">
+            <i class="fa-brands fa-windows start-logo"></i>
         </div>
-        <!-- Visuel 2 -->
-        <div class="portfolio-item" style="flex:1 1 calc(50% - 20px); box-sizing:border-box;">
-            <img src="images/Rounhaa - Copie.png" alt="Visuel 2" style="width:100%; display:block; margin-bottom:5px;">
-            <button class="note-btn" data-note="note2" style="cursor:pointer;">➡ Note d’intention</button>
-        </div>
-        <!-- Visuel 3 -->
-        <div class="portfolio-item" style="flex:1 1 calc(50% - 20px); box-sizing:border-box;">
-            <img src="images/Khali.png" alt="Visuel 3" style="width:100%; display:block; margin-bottom:5px;">
-            <button class="note-btn" data-note="note3" style="cursor:pointer;">➡ Note d’intention</button>
-        </div>
-        <!-- Visuel 4 -->
-        <div class="portfolio-item" style="flex:1 1 calc(50% - 20px); box-sizing:border-box;">
-            <img src="images/Yuu V3.png" alt="Visuel 4" style="width:100%; display:block; margin-bottom:5px;">
-            <button class="note-btn" data-note="note4" style="cursor:pointer;">➡ Note d’intention</button>
-        </div>
-        <!-- Visuel 5 -->
-        <div class="portfolio-item" style="flex:1 1 calc(50% - 20px); box-sizing:border-box;">
-            <img src="images/Izu.png" alt="Visuel 5" style="width:100%; display:block; margin-bottom:5px;">
-            <button class="note-btn" data-note="note5" style="cursor:pointer;">➡ Note d’intention</button>
+        <div class="center-section"></div>
+        <div class="right-section">
+            <i class="fa-solid fa-wifi icon"></i>
+            <i class="fa-solid fa-volume-high icon"></i>
+            <span class="clock" id="clock">12:34</span>
         </div>
     </div>
-</div>
 
-<!-- Notes d’intention -->
-<div class="window note-window" id="note1-window">
-    <div class="window-titlebar">
-        <span>Note d’intention - 34Murphy La Chouette</span>
-        <button class="close-btn">X</button>
-    </div>
-    <div class="window-content">
-        <p>Créer un visuel fort pour le rappeur 34Murphy, mêlant mystère et menace. La chouette, symbole de sagesse, devient une cible marquée par la violence (viseur rouge, yeux ensanglantés), reflétant un univers sombre et audacieux</p>
-        <p>- - -</p>
-        <p>Affiche promotionnelle pour un projet musical. L’objectif est d’attirer l’attention avec une esthétique contrastée et provocante, en accord avec l’identité du rappeur.</p>
-    </div>
-</div>
-
-<div class="window note-window" id="note2-window">
-    <div class="window-titlebar">
-        <span>Note d’intention - Rounhaa</span>
-        <button class="close-btn">X</button>
-    </div>
-    <div class="window-content">
-         <p>en travaux</p>
-    </div>
-</div>
-
-<div class="window note-window" id="note3-window">
-    <div class="window-titlebar">
-        <span>Note d’intention - Khali</span>
-        <button class="close-btn">X</button>
-    </div>
-    <div class="window-content">
-        <p>en travaux</p>
-    </div>
-</div>
-
-<div class="window note-window" id="note4-window">
-    <div class="window-titlebar">
-        <span>Note d’intention - Yuu</span>
-        <button class="close-btn">X</button>
-    </div>
-    <div class="window-content">
-        <p>en travaux</p>
-    </div>
-</div>
-
-<div class="window note-window" id="note5-window">
-    <div class="window-titlebar">
-        <span>Note d’intention - Izu</span>
-        <button class="close-btn">X</button>
-    </div>
-    <div class="window-content">
-       <p>en travaux</p>
-    </div>
-</div>
-
-
-<!-- Fenêtre "Contact" -->
-<div class="window" id="contact-window">
-    <div class="window-titlebar">
-        <span>Contact</span>
-        <button class="close-btn">X</button>
-    </div>
-
-    <div class="window-content">
-
-        <!-- Bannière -->
-        <div class="window-banner">
-            <img src="images/banniere.png" alt="Bannière" />
-        </div>
-
-        <!-- Conteneur des images -->
-        <div class="contact-images">
-
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/bunny_wave/" target="_blank" class="contact-item">
-                <img src="images/logo insta.png" alt="Instagram">
-                <p>@bunny.wave</p>
-            </a>
-
-            <!-- TikTok -->
-            <a href="https://www.tiktok.com/@bunny_wave0" target="_blank" class="contact-item">
-                <img src="images/logo tiktok.png" alt="TikTok">
-                <p>@bunny.wave</p>
-            </a>
-
-            <!-- Email -->
-            <a href="mailto:elysespada@gmail.com" class="contact-item">
-                <img src="images/logo mail.png" alt="Email">
-                <p>elysespada@gmail.com</p>
-            </a>
-
-            <!-- Téléphone -->
-            <a href="tel:0673660016" class="contact-item">
-                <img src="images/logo tel.png" alt="Téléphone">
-                <p>06 73 66 00 16</p>
-            </a>
-
-        </div>
-    </div>
-</div>
-
-<!-- Fenêtre "Musique" -->
-<div class="window" id="musique-window" style="width:500px; height:180px;">
-  <div class="window-titlebar">
-    <span>Musique</span>
-    <button class="close-btn">X</button>
-  </div>
-  <div class="window-content" style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:15px; padding:20px;">
-    
-    <!-- Player -->
-    <audio id="audio-player" src="audio/ton morceau.mp3"></audio>
-    
-    <div class="retro-controls">
-      <button id="play-btn">▶</button>
-      <button id="pause-btn">❚❚</button>
-      <button id="stop-btn">■</button>
-    </div>
-    
-    <div class="retro-volume">
-      Volume: <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
-    </div>
-    
-  </div>
-</div>
-
-<style>
-/* Retro Windows 95 controls */
-.retro-controls button {
-  background: #c0c0c0;
-  border: 2px solid #fff;
-  border-right-color: #808080;
-  border-bottom-color: #808080;
-  padding: 5px 12px;
-  font-size: 16px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: inset -2px -2px 0 #808080;
-}
-
-.retro-controls button:active {
-  box-shadow: inset 2px 2px 0 #808080;
-}
-
-.retro-volume input[type="range"] {
-  -webkit-appearance: none;
-  width: 200px;
-  height: 10px;
-  background: #c0c0c0;
-  border: 2px solid #fff;
-  border-right-color: #808080;
-  border-bottom-color: #808080;
-}
-
-.retro-volume input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 15px;
-  height: 20px;
-  background: #808080;
-  border: 2px solid #fff;
-  border-right-color: #808080;
-  border-bottom-color: #808080;
-  cursor: pointer;
-}
-
-.retro-volume input[type="range"]:active::-webkit-slider-thumb {
-  border: 2px solid #808080;
-  border-top-color: #fff;
-  border-left-color: #fff;
-}
-</style>
-
-<script>
-// Controls
-const audio = document.getElementById('audio-player');
-document.getElementById('play-btn').addEventListener('click', () => audio.play());
-document.getElementById('pause-btn').addEventListener('click', () => audio.pause());
-document.getElementById('stop-btn').addEventListener('click', () => { 
-    audio.pause(); 
-    audio.currentTime = 0; 
-});
-document.getElementById('volume-slider').addEventListener('input', e => audio.volume = e.target.value);
-</script>
-
-
-    <!-- Script -->
-    <script>
-        // ===== Rotation du logo =====
-        const logo = document.getElementById('logo');
-        const maxAngle = 15;
-        document.addEventListener('mousemove', e => {
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const dx = e.clientX - centerX;
-            const dy = e.clientY - centerY;
-            const rotateY = (dx / centerX) * maxAngle;
-            const rotateX = (-dy / centerY) * maxAngle;
-            logo.style.transform = `translate(-50%, -50%) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
-        document.addEventListener('mouseleave', () => {
-            logo.style.transform = `translate(-50%, -50%) rotateX(0deg) rotateY(0deg)`;
-        });
-
-        // ===== Fonction fenêtres =====
-        function makeWindow(folderId, windowId) {
-            const folder = document.getElementById(folderId);
-            const windowEl = document.getElementById(windowId);
-            const closeBtn = windowEl.querySelector('.close-btn');
-            const titleBar = windowEl.querySelector('.window-titlebar');
-
-            if(folder) folder.addEventListener('click', () => windowEl.style.display = 'block');
-            closeBtn.addEventListener('click', () => windowEl.style.display = 'none');
-
-            let isDragging = false;
-            let offsetX = 0, offsetY = 0;
-            titleBar.addEventListener('mousedown', e => {
-                isDragging = true;
-                offsetX = e.clientX - windowEl.offsetLeft;
-                offsetY = e.clientY - windowEl.offsetTop;
-                titleBar.style.cursor = 'grabbing';
-            });
-            document.addEventListener('mousemove', e => {
-                if (!isDragging) return;
-                const x = e.clientX - offsetX;
-                const y = e.clientY - offsetY;
-                windowEl.style.left = x + 'px';
-                windowEl.style.top = y + 'px';
-            });
-            document.addEventListener('mouseup', () => {
-                if (isDragging) {
-                    isDragging = false;
-                    titleBar.style.cursor = 'grab';
-                }
-            });
-        }
-
-        // Fenêtres principales
-        makeWindow('about-folder', 'about-window');
-        makeWindow('moi-folder', 'moi-window'); 
-        makeWindow('portfolio-folder', 'portfolio-window');
-        makeWindow('contact-folder', 'contact-window');
-        makeWindow('musique-folder', 'musique-window');
-        makeWindow('chat-folder', 'chat-window');
-        makeWindow('poubelle-folder', 'poubelle-window');
-
-        
-        // Notes d’intention
-        document.querySelectorAll('.note-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const noteId = btn.dataset.note + '-window';
-                document.getElementById(noteId).style.display = 'block';
-            });
-        });
-
-        document.querySelectorAll('.note-window').forEach(win => makeWindow(null, win.id));
-    </script>
-</body>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bureau Bunny</title>
-
-<!-- Font Awesome pour les icônes -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<style>
-/* Reset de base */
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #00008B; /* fond style bureau */
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-}
-
-/* Bureau */
-#desktop {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-/* Dossiers */
-.folder {
-    width: 80px;
-    text-align: center;
-    cursor: pointer;
-    user-select: none;
-    position: absolute; /* pour pouvoir les déplacer */
-    z-index: 2;
-}
-
-.folder img {
-    width: 64px;
-    height: 64px;
-    display: block;
-    margin: 0 auto;
-}
-
-.folder p {
-    margin-top: 5px;
-    font-size: 14px;
-    color: white;
-}
-
-/* Barre Windows 7 */
-#taskbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 40px;
-    background: #5e5e5e;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-    box-sizing: border-box;
-    z-index: 100;
-}
-
-/* Sections de la barre */
-.start-section, .center-section, .right-section {
-    display: flex;
-    align-items: center;
-}
-
-.start-logo {
-    color: white;
-    font-size: 24px;
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.icon {
-    color: white;
-    font-size: 18px;
-    margin-left: 10px;
-}
-
-.clock {
-    color: white;
-    margin-left: 10px;
-    font-family: Arial, sans-serif;
-}
-</style>
-</head>
-<body>
-
-<!-- Barre Windows -->
-<div id="taskbar">
-    <div class="start-section">
-        <i class="fa-brands fa-windows start-logo"></i>
-    </div>
-    <div class="center-section">
-        <!-- icônes d'applications ouvertes -->
-    </div>
-    <div class="right-section">
-        <i class="fa-solid fa-wifi icon"></i>
-        <i class="fa-solid fa-volume-high icon"></i>
-        <span class="clock" id="clock">12:34</span>
-    </div>
-</div>
-
-<script>
-// Clock en temps réel
-function updateClock() {
-    const clock = document.getElementById('clock');
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    clock.textContent = `${hours}:${minutes}`;
-}
-setInterval(updateClock, 1000);
-updateClock();
-</script>
-
+    <!-- Script JS -->
+    <script src="script.js"></script>
 </body>
 </html>
-
-<!-- Dossier Chat -->
-<div class="folder" id="chat-folder">
-    <img src="images/logo chat.png" alt="Chat">
-    <p>Chat</p>
-</div>
-
-<!-- Fenêtre Chat -->
-<div class="window" id="chat-window" style="width:400px; height:500px;">
-    <div class="window-titlebar">
-        <span>Chat</span>
-        <button class="close-btn">X</button>
-    </div>
-    <div class="window-content" id="chat-messages" style="display:flex; flex-direction:column; justify-content:flex-end; padding:10px; gap:5px; overflow-y:auto;">
-        <!-- Les messages s'afficheront ici -->
-    </div>
-    <div style="display:flex; gap:5px; padding:10px;">
-        <input type="text" id="chat-input" placeholder="Tape ton message..." style="flex:1;">
-        <button id="chat-send">Envoyer</button>
-        <button id="clear-chat">Vider le chat</button>
-    </div>
-</div>
-
-<script>
-const chatFolder = document.getElementById('chat-folder');
-const chatWindow = document.getElementById('chat-window');
-const chatMessages = document.getElementById('chat-messages');
-const chatInput = document.getElementById('chat-input');
-const chatSend = document.getElementById('chat-send');
-const clearChat = document.getElementById('clear-chat');
-
-let blablaCount = 1;
-
-// Ouvrir la fenêtre chat
-chatFolder.addEventListener('click', () => chatWindow.style.display = 'block');
-
-// Charger messages depuis localStorage
-window.addEventListener('DOMContentLoaded', () => {
-    const savedMessages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
-    savedMessages.forEach(msg => {
-        const p = document.createElement('p');
-        p.textContent = msg;
-        chatMessages.appendChild(p);
-    });
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-});
-
-// Fonction pour envoyer un message
-function sendMessage() {
-    const msg = chatInput.value.trim();
-    if(!msg) return;
-
-    const fullMsg = `Blablateur ${blablaCount}: ${msg}`;
-    const messageEl = document.createElement('p');
-    messageEl.textContent = fullMsg;
-    chatMessages.appendChild(messageEl);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    // Sauvegarder
-    const savedMessages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
-    savedMessages.push(fullMsg);
-    localStorage.setItem('chatMessages', JSON.stringify(savedMessages));
-
-    chatInput.value = '';
-    blablaCount++;
-}
-
-// Envoyer avec le bouton ou Enter
-chatSend.addEventListener('click', sendMessage);
-chatInput.addEventListener('keydown', e => { if(e.key === 'Enter') sendMessage(); });
-
-// Vider le chat
-clearChat.addEventListener('click', () => {
-    chatMessages.innerHTML = '';
-    localStorage.removeItem('chatMessages');
-    blablaCount = 1;
-});
-
-// Rendre la fenêtre draggable et fermable
-makeWindow('chat-folder', 'chat-window');
-
-// Notes d’intention : ouvrir avec le bouton et rendre draggable
-document.querySelectorAll('.note-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const noteId = btn.dataset.note + '-window';
-        const noteWin = document.getElementById(noteId);
-        noteWin.style.display = 'block';
-        // Rendre draggable si pas encore fait
-        makeWindow(null, noteId);
-    });
-});
-
-</script>
-
-<!-- Dossier poubelle sur le bureau -->
-<div class="folder" id="poubelle-folder" style="bottom: 60px; right:20px; position:absolute;">
-    <img src="images/logo poubelle.png" alt="Poubelle" style="width:60px; height:60px;">
-    <p>Poubelle</p>
-</div>
-
-<!-- Fenêtre poubelle -->
-<div class="window" id="poubelle-window" style="width:400px; height:400px; display:none;">
-    <div class="window-titlebar">
-        <span>Poubelle</span>
-        <button class="close-btn">X</button>
-    </div>
-    <div class="window-content" style="display:flex; justify-content:center; align-items:center; height:100%;">
-        <img src="images/ton-gif.gif" alt="GIF" style="max-width:100%; max-height:100%;">
-    </div>
-</div>
-
-<script>
-const poubelleFolder = document.getElementById('poubelle-folder');
-const poubelleWindow = document.getElementById('poubelle-window');
-const closeBtn = poubelleWindow.querySelector('.close-btn');
-
-// Ouvrir la fenêtre
-poubelleFolder.addEventListener('click', () => {
-    poubelleWindow.style.display = 'block';
-});
-
-// Fermer la fenêtre
-closeBtn.addEventListener('click', () => {
-    poubelleWindow.style.display = 'none';
-});
-
-// Si tu veux que la fenêtre soit draggable, tu peux réutiliser ta fonction makeWindow
-makeWindow('poubelle-folder', 'poubelle-window');
-</script>
-
-
