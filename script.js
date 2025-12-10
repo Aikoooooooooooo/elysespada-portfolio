@@ -1,4 +1,4 @@
-/* ===================== ROTATION LOGO ===================== */
+/* ===== Rotation du logo ===== */
 const logo = document.getElementById('logo');
 const maxAngle = 15;
 
@@ -15,13 +15,12 @@ document.addEventListener('mouseleave', () => {
 });
 
 
-/* ===================== DRAG & DROP (PC + MOBILE) ===================== */
+/* ===== Drag & Drop PC + Mobile ===== */
 function makeDraggable(win) {
     const titleBar = win.querySelector('.window-titlebar');
     if (!titleBar) return;
 
-    let isDragging = false;
-    let offsetX = 0, offsetY = 0;
+    let isDragging = false, offsetX = 0, offsetY = 0;
 
     const startDrag = (x, y) => {
         isDragging = true;
@@ -36,7 +35,7 @@ function makeDraggable(win) {
         let left = x - offsetX;
         let top = y - offsetY;
 
-        // Limites pour rester dans l'écran
+        // Limites fenêtre
         left = Math.max(0, Math.min(left, window.innerWidth - win.offsetWidth));
         top = Math.max(0, Math.min(top, window.innerHeight - win.offsetHeight));
 
@@ -55,74 +54,76 @@ function makeDraggable(win) {
     document.addEventListener('mousemove', e => drag(e.clientX, e.clientY));
     document.addEventListener('mouseup', endDrag);
 
-    // MOBILE
+    // Mobile
     titleBar.addEventListener('touchstart', e => {
-        e.preventDefault(); // empêche le scroll
+        e.preventDefault();
         const touch = e.touches[0];
         startDrag(touch.clientX, touch.clientY);
     });
-
     titleBar.addEventListener('touchmove', e => {
         e.preventDefault();
         const touch = e.touches[0];
         drag(touch.clientX, touch.clientY);
     });
-
     titleBar.addEventListener('touchend', endDrag);
 }
 
 
-/* ===================== FENÊTRES ===================== */
-// Rendre toutes les fenêtres draggable + fermer avec bouton
-document.querySelectorAll('.window').forEach(win => {
+/* ===== Initialisation fenêtres ===== */
+document.querySelectorAll('.window').forEach((win, index) => {
+    // Initial positions si pas définies
+    win.style.left = win.style.left || (150 + index*20) + 'px';
+    win.style.top = win.style.top || (100 + index*20) + 'px';
+
+    // Drag & Drop
     makeDraggable(win);
 
+    // Fermer la fenêtre
     const closeBtn = win.querySelector('.close-btn');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => win.style.display = 'none');
-    }
+    if (closeBtn) closeBtn.addEventListener('click', () => win.style.display = 'none');
 });
 
 
-/* ===================== OUVRIR FENÊTRES ===================== */
-// via dossier
-['about-folder', 'portfolio-folder', 'contact-folder', 'moi-folder', 'musique-folder', 'chat-folder', 'poubelle-folder'].forEach(folderId => {
+/* ===== Ouvrir fenêtres via dossiers ===== */
+['about-folder', 'moi-folder', 'portfolio-folder', 'contact-folder', 'musique-folder', 'chat-folder', 'poubelle-folder'].forEach(folderId => {
     const folder = document.getElementById(folderId);
     if (!folder) return;
 
-    // correspondance avec la fenêtre
-    const winId = folderId.replace('-folder','-window');
+    const winId = folderId.replace('-folder', '-window');
     const win = document.getElementById(winId);
     if (!win) return;
 
-    folder.addEventListener('click', () => {
-        win.style.display = 'block';
-    });
+    folder.addEventListener('click', () => win.style.display = 'block');
 });
 
-// via boutons (notes d’intention)
+
+/* ===== Ouvrir fenêtres via boutons (notes) ===== */
 document.querySelectorAll('.note-btn').forEach(btn => {
-    const noteId = btn.dataset.note + '-window';
-    const noteWindow = document.getElementById(noteId);
-    if (!noteWindow) return;
-
     btn.addEventListener('click', () => {
-        noteWindow.style.display = 'block';
-        makeDraggable(noteWindow); // s'assurer que c'est draggable
+        const noteId = btn.dataset.note + '-window';
+        const noteWin = document.getElementById(noteId);
+        if (!noteWin) return;
+
+        noteWin.style.display = 'block';
+        // Drag & Drop si pas déjà
+        makeDraggable(noteWin);
     });
 });
 
 
-/* ===================== LECTEUR AUDIO ===================== */
+/* ===== Lecteur audio ===== */
 const audioPlayer = document.getElementById('audio-player');
 const playBtn = document.getElementById('play-btn');
-const stopBtn = document.getElementById('stop-btn');
 const pauseBtn = document.getElementById('pause-btn');
+const stopBtn = document.getElementById('stop-btn');
 const volumeSlider = document.getElementById('volume-slider');
 
 if (audioPlayer) {
-    if (playBtn) playBtn.addEventListener('click', () => audioPlayer.play());
-    if (pauseBtn) pauseBtn.addEventListener('click', () => audioPlayer.pause());
-    if (stopBtn) stopBtn.addEventListener('click', () => { audioPlayer.pause(); audioPlayer.currentTime = 0; });
-    if (volumeSlider) volumeSlider.addEventListener('input', e => audioPlayer.volume = e.target.value);
+    playBtn?.addEventListener('click', () => audioPlayer.play());
+    pauseBtn?.addEventListener('click', () => audioPlayer.pause());
+    stopBtn?.addEventListener('click', () => {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+    });
+    volumeSlider?.addEventListener('input', e => audioPlayer.volume = e.target.value);
 }
