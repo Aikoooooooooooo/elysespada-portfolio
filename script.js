@@ -160,3 +160,48 @@ progressBar.addEventListener('input', () => {
 volumeControl.addEventListener('input', () => {
     audioPlayer.volume = volumeControl.value;
 });
+
+// Sélection de la fenêtre
+const windows = document.querySelectorAll('.window');
+
+windows.forEach(win => {
+    let offsetX = 0, offsetY = 0, isDragging = false;
+
+    // PC drag
+    win.querySelector('.window-titlebar').addEventListener('mousedown', (e) => {
+        isDragging = true;
+        offsetX = e.clientX - win.offsetLeft;
+        offsetY = e.clientY - win.offsetTop;
+        win.style.zIndex = 1000; // Met la fenêtre devant
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        win.style.left = e.clientX - offsetX + 'px';
+        win.style.top = e.clientY - offsetY + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+
+    // Mobile drag
+    win.querySelector('.window-titlebar').addEventListener('touchstart', (e) => {
+        isDragging = true;
+        const touch = e.touches[0];
+        offsetX = touch.clientX - win.offsetLeft;
+        offsetY = touch.clientY - win.offsetTop;
+        win.style.zIndex = 1000;
+    });
+
+    win.querySelector('.window-titlebar').addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        win.style.left = touch.clientX - offsetX + 'px';
+        win.style.top = touch.clientY - offsetY + 'px';
+    });
+
+    win.querySelector('.window-titlebar').addEventListener('touchend', () => {
+        isDragging = false;
+    });
+});
