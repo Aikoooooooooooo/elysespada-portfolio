@@ -15,7 +15,7 @@ document.addEventListener('mouseleave', () => {
 });
 
 
-/* ===== Drag & Drop PC + Mobile ===== */
+/* ===== Drag & Drop pour PC + Mobile ===== */
 function makeDraggable(win) {
     const titleBar = win.querySelector('.window-titlebar');
     if (!titleBar) return;
@@ -35,7 +35,6 @@ function makeDraggable(win) {
         let left = x - offsetX;
         let top = y - offsetY;
 
-        // Limites fenêtre
         left = Math.max(0, Math.min(left, window.innerWidth - win.offsetWidth));
         top = Math.max(0, Math.min(top, window.innerHeight - win.offsetHeight));
 
@@ -56,7 +55,7 @@ function makeDraggable(win) {
 
     // Mobile
     titleBar.addEventListener('touchstart', e => {
-        e.preventDefault();
+        e.preventDefault(); // empêche le scroll
         const touch = e.touches[0];
         startDrag(touch.clientX, touch.clientY);
     });
@@ -69,13 +68,8 @@ function makeDraggable(win) {
 }
 
 
-/* ===== Initialisation fenêtres ===== */
-document.querySelectorAll('.window').forEach((win, index) => {
-    // Initial positions si pas définies
-    win.style.left = win.style.left || (150 + index*20) + 'px';
-    win.style.top = win.style.top || (100 + index*20) + 'px';
-
-    // Drag & Drop
+/* ===== Gestion des fenêtres ===== */
+document.querySelectorAll('.window').forEach(win => {
     makeDraggable(win);
 
     // Fermer la fenêtre
@@ -85,45 +79,61 @@ document.querySelectorAll('.window').forEach((win, index) => {
 
 
 /* ===== Ouvrir fenêtres via dossiers ===== */
-['about-folder', 'moi-folder', 'portfolio-folder', 'contact-folder', 'musique-folder', 'chat-folder', 'poubelle-folder'].forEach(folderId => {
+['about-folder', 'portfolio-folder', 'contact-folder'].forEach(folderId => {
     const folder = document.getElementById(folderId);
-    if (!folder) return;
-
-    const winId = folderId.replace('-folder', '-window');
+    const winId = folderId.replace('-folder','-window');
     const win = document.getElementById(winId);
-    if (!win) return;
 
-    folder.addEventListener('click', () => win.style.display = 'block');
+    if (folder && win) {
+        folder.addEventListener('click', () => win.style.display = 'block');
+    }
 });
 
 
-/* ===== Ouvrir fenêtres via boutons (notes) ===== */
+/* ===== Ouvrir fenêtres via boutons ===== */
 document.querySelectorAll('.note-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const noteId = btn.dataset.note + '-window';
-        const noteWin = document.getElementById(noteId);
-        if (!noteWin) return;
-
-        noteWin.style.display = 'block';
-        // Drag & Drop si pas déjà
-        makeDraggable(noteWin);
-    });
+    const noteId = btn.dataset.note + '-window';
+    const noteWindow = document.getElementById(noteId);
+    if (noteWindow) {
+        btn.addEventListener('click', () => noteWindow.style.display = 'block');
+    }
 });
 
 
 /* ===== Lecteur audio ===== */
 const audioPlayer = document.getElementById('audio-player');
 const playBtn = document.getElementById('play-btn');
-const pauseBtn = document.getElementById('pause-btn');
-const stopBtn = document.getElementById('stop-btn');
-const volumeSlider = document.getElementById('volume-slider');
+const progressBar = document.getElementById('progress-bar');
+const volumeControl = document.getElementById('volume-control');
 
-if (audioPlayer) {
-    playBtn?.addEventListener('click', () => audioPlayer.play());
-    pauseBtn?.addEventListener('click', () => audioPlayer.pause());
-    stopBtn?.addEventListener('click', () => {
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0;
+if (playBtn && audioPlayer) {
+    // Play / Pause
+    playBtn.addEventListener('click', () => {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            playBtn.textContent = '❚❚';
+        } else {
+            audioPlayer.pause();
+            playBtn.textContent = '►';
+        }
     });
-    volumeSlider?.addEventListener('input', e => audioPlayer.volume = e.target.value);
+
+    // Mettre à jour la barre de progression
+    audioPlayer.addEventListener('timeupdate', () => {
+        progressBar.max = audioPlayer.duration;
+        progressBar.value = audioPlayer.currentTime;
+    });
+
+    // Changer la position de lecture
+    progressBar.addEventListener('input', () => {
+        audioPlayer.currentTime = progressBar.value;
+    });
+
+    // Contrôle du volume
+    volumeControl.addEventListener('input', () => {
+        audioPlayer.volume = volumeControl.value;
+    });
 }
+
+
+
